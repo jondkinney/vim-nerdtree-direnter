@@ -1,4 +1,10 @@
-function! NERDTreeCustomOpenFile(target)
-  call a:target.activate({'where': 't'})
+function! nerdtree#ui_glue#createDefaultBindings()
+  let s = '<SNR>' . s:SID() . '_'
+  call NERDTreeAddKeyMap({ 'key': '<2-LeftMouse>', 'scope': "FileNode", 'callback': s."activateFileNode" })
 endfunction
-call NERDTreeAddKeyMap({'key': '<tab>', 'scope': 'FileNode', 'callback': 'NERDTreeCustomOpenFile', 'quickhelpText': 'open file in new tab'})
+
+"FUNCTION: s:activateFileNode() {{{1
+"handle the user activating a tree node
+function! s:activateFileNode(node)
+    call a:node.activate({'reuse': 1, 'where': 't'})
+endfunction
